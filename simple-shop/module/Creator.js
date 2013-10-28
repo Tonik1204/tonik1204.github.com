@@ -92,7 +92,7 @@
             var info = currTable.find('tbody td:not(.act)');
             for (var i = 0; i < info.length; i) {
                 headers.each(function () {
-                    objInJSON[$(this).attr('data-type')] = info.eq(i).text();
+                    objInJSON[$(this).attr('data-type')] = parseInt(info.eq(i).text()) || info.eq(i).text();
                     i++;
                 });
                 currJSON.push($.parseJSON(JSON.stringify(objInJSON)));
