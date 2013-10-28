@@ -2,7 +2,7 @@
 	
     var contentGenerate = (function ($, Mediator, ShopTableMaker, afterTableLoadAction, sortTable) {
         var mediator = new Mediator();
-        var url = "data/db/" + $('.active').children().text() + ".json";
+        var url = "simple-shop/data/db/" + $('.active').children().text() + ".json";
         var cartJSON = /(?:cartJSON=)(.+?)(?=;|$)/g.exec(document.cookie);
 
         mediator.subscribe('JSONisReady', function (data, elem) {			
