@@ -54,7 +54,7 @@
 
         function cartTableMaker(choosenStafCopy, newQuantity, currStafQuantity) {
             var currStafName = choosenStafCopy.find('td:first-child').text();
-            var removeButn = $('<img class="butn Remove" src="data/img/Remove.png" alt="Remove"/>');
+            var removeButn = $('<img class="butn Remove" src="simple-shop/data/img/Remove.png" alt="Remove"/>');
             var quantBalance = parseInt(currStafQuantity.text()) - newQuantity;
             var staffNameInCart = $('.cartTab td:first-child');
             var hasSuchName = false;
