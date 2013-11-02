@@ -9,7 +9,7 @@
         categories.on('click', 'a', function () {
             document.cookie = 'activeCategory=' + this.href;
             var clickedCategoryLink = $(this);
-            var url = "simple-shop/data/db/" + clickedCategoryLink.html() + ".json";
+            var url = "data/db/" + clickedCategoryLink.html() + ".json";
             categories.removeClass('active');
             clickedCategoryLink.parent().addClass('active');
 
