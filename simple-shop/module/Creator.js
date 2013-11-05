@@ -46,7 +46,7 @@
             this.newTable = $('<tbody></tbody>');
             $(objJSON).each(function () {
                 var newTabRow = $('<tr><td>' + this['name'] + '</td><td>' + this['price'] + '</td><td>' + this['quantity'] +
-                '</td><td class="act"><input type="text" value="1" class="inpt"/><img class="butn Buy" src=" simple-shop/data/img/toCart.png" alt="to Cart"/></td></tr>');
+                '</td><td class="act"><input type="text" value="1" class="inpt"/><img class="butn Buy" src="data/img/toCart.png" alt="to Cart"/></td></tr>');
                 self.newTable.append(newTabRow);
             });
             this.tableContent.replaceWith(this.newTable);
@@ -57,7 +57,7 @@
             this.newTable = $('<tbody></tbody>');
             $(objJSON).each(function () {
                 var newTabRow = $('<tr><td>' + this['name'] + '</td><td>' + this['price'] + '</td><td>' + this['quantity'] +
-                '</td><td class="act"><input type="text" value="1" class="cartInpt inpt"/><img class="butn Remove" src=" simple-shop/data/img/Remove.png" alt="Remove"/></td></tr>');
+                '</td><td class="act"><input type="text" value="1" class="cartInpt inpt"/><img class="butn Remove" src="data/img/Remove.png" alt="Remove"/></td></tr>');
                 self.newTable.append(newTabRow);
             });
             this.tableContent.replaceWith(this.newTable);
