@@ -92,7 +92,7 @@ const SearchStore = (props: any): JSX.Element => {
 
       try {
         const result = await axios(url);
-        console.log(result);
+
         if (!didCancel) {
           dispatch({
             type: ActionTypes.FETCH_SUCCESS,
