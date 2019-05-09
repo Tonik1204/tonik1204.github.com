@@ -17,10 +17,10 @@ Current solution is fully responsive and fits all modern browsers.
 To start project locally just run `npm install` and then `npm start`, or if you preffer `yarn install` and `yarn start`;
 No need to do additional `build` steps, http://localhost:3000/ should be opened automatically in your browser with current page.
 
-To test project run `npm test` or `yarn test`;
+To test project run `npm test` or `yarn test`.
 Next please follow the instructions in your terminal:
 
-```shell
+```sh
 Watch Usage
  › Press a to run all tests.
  › Press f to run only failed tests.
