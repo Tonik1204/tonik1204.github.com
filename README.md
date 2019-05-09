@@ -35,13 +35,14 @@ Watch Usage
 
 ### Live Demo: [weather-forecast](https://tonik1204.github.io/weather-forecast/)
 
+
 ## Motivation
 
 <!-- TOC -->
 
 There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution, based on new React Hooks API. Due to lack of possibility right now to try it on a real project, the curent app looks the best fit.
 
-## Next steps(TODO List)
+## Next steps
 
 <!-- TOC -->
 
