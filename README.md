@@ -41,11 +41,9 @@ Watch Usage
 
 There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution, based on new React Hooks API. Due to lack of possibility right now to try it on a real project, the curent app looks the best fit.
 
-## Next steps
+## Next steps(TODO List)
 
 <!-- TOC -->
-
-### TODO List:
 
 * Fully cover code with unit and integration tests
 * Include IE 11 support
