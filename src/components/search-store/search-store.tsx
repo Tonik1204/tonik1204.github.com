@@ -10,7 +10,7 @@ enum ActionTypes {
 
 interface CityItem {
   city: string;
-  countryCode: string;
+  country: string;
 }
 
 interface State {
@@ -74,6 +74,12 @@ const searchFetchReducer = (state: State, action: Action) => {
   }
 };
 
+const getTransformCityData = (data: any[]): CityItem[] =>
+  data.map(item => ({
+    city: item._embedded['city:item'].name,
+    country: item._embedded['city:item']._embedded['city:country'].name,
+  }));
+
 const SearchStore = (props: any): JSX.Element => {
   const [url, setUrl] = useState('');
   const [state, dispatch] = useReducer(searchFetchReducer, defaultState);
@@ -86,11 +92,13 @@ const SearchStore = (props: any): JSX.Element => {
 
       try {
         const result = await axios(url);
-
+        console.log(result);
         if (!didCancel) {
           dispatch({
             type: ActionTypes.FETCH_SUCCESS,
-            payload: result.data.data,
+            payload: getTransformCityData(
+              result.data._embedded['city:search-results'],
+            ),
           });
         }
       } catch (error) {

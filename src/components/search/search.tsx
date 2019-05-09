@@ -28,7 +28,7 @@ const Search = (props: Props) => {
 
   const showDropdown: boolean = !!searchData.length && hasFocus;
   const dropdownItems = useMemo(
-    () => searchData.map(({ city, countryCode }) => `${city}, ${countryCode}`),
+    () => searchData.map(({ city, country }) => `${city}, ${country}`),
     [searchData],
   );
 
