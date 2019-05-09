@@ -4,9 +4,11 @@
 
 Responsive single HTML page displaying a 5 day weather forecast.
 
-App was created with help of `Create React App`.
-Technology stack used: `React(Hooks), Typescript, styled-components, webpack, npm, axios, moment`.
-API used: [weather-forecast](`https://openweathermap.org/forecast5`), [city-finder](`https://developers.teleport.org/api/`).
+- App was created with help of `Create React App`.
+
+- Technology stack used: `React(Hooks), Typescript, styled-components, webpack, npm, axios, moment`.
+
+- API used: [weather-forecast](`https://openweathermap.org/forecast5`), [city-finder](`https://developers.teleport.org/api/`).
 
 Current solution is fully responsive and fits all modern browsers.
 
@@ -14,7 +16,8 @@ Current solution is fully responsive and fits all modern browsers.
 
 <!-- TOC -->
 
-To start project locally just run `npm install` and then `npm start`, or if you preffer `yarn install` and `yarn start`;
+To start project locally just run `npm install` and then `npm start`, or if you preffer `yarn install` and `yarn start`.
+
 No need to do additional `build` steps, http://localhost:3000/ should be opened automatically in your browser with current page.
 
 To test project run `npm test` or `yarn test`.
@@ -44,8 +47,8 @@ There are a lot of weather forecast apps with lots of data indicators and parame
 
 ### TODO List:
 
-* [x] Fully cover code with unit and integration tests.
-* [x] Include IE 11 support.
-* [x] Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2).
-* [x] Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16).
-* [x] Add login/logout/register system and integrate with some analytical tool.
+* [] Fully cover code with unit and integration tests.
+* [] Include IE 11 support.
+* [] Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2).
+* [] Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16).
+* [] Add login/logout/register system and integrate with some analytical tool.
