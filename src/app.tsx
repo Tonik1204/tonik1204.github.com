@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import colors from 'styles/colors';
 import { device, isDayTime } from 'config/config';
 import { Header } from 'components/header';
 import { Main } from 'components/main';
@@ -36,6 +37,7 @@ const App = (props: Props) => {
 };
 
 const AppStyled = styled(App)`
+  background-color: ${colors.purpure900};
   background-image: url(${spaceImg});
   background-size: cover;
   background-repeat: no-repeat;
@@ -92,7 +94,8 @@ const AppStyled = styled(App)`
     grid-template-columns: 7fr 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas: 'main aside';
-    background-image: url(${isDayTime ? dayImg : nightImg});
+    background-color: ${!isDayTime ? colors.blue50 : colors.black700};
+    background-image: url(${!isDayTime ? dayImg : nightImg});
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
