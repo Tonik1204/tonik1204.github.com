@@ -6,7 +6,7 @@ Responsive single HTML page displaying a 5 day weather forecast.
 
 - App was created with help of `Create React App`.
 
-- Technology stack used: `React(Hooks), Typescript, styled-components, webpack, npm, axios, moment`.
+- Technology stack used: `React(Hooks), Typescript, styled-components, webpack, npm, axios, moment, jest, enzyme`.
 
 - API used: [weather-forecast](`https://openweathermap.org/forecast5`), [city-finder](`https://developers.teleport.org/api/`).
 
@@ -31,10 +31,9 @@ Watch Usage
  › Press p to filter by a filename regex pattern.
  › Press t to filter by a test name regex pattern.
  › Press Enter to trigger a test run.
- ```
+```
 
 ### Live Demo: [weather-forecast](https://tonik1204.github.io/weather-forecast/)
-
 
 ## Motivation
 
@@ -46,8 +45,8 @@ There are a lot of weather forecast apps with lots of data indicators and parame
 
 <!-- TOC -->
 
-* Fully cover code with unit and integration tests
-* Include IE 11 support
-* Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2)
-* Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16)
-* Add login/logout/register system and integrate with some analytical tool
+- Fully cover code with unit and integration tests
+- Include IE 11 support
+- Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2)
+- Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16)
+- Add login/logout/register system and integrate with some analytical tool

@@ -19,7 +19,7 @@ const TabItem = (props: Props): JSX.Element => {
   return (
     <div className={className}>
       <section>
-        <strong>{moment(date).format('ddd, Do')}</strong>
+        <strong className="date">{moment(date).format('ddd, Do')}</strong>
         <img
           src={`${config.forecast_icons_url}${weather_icon}.png`}
           alt={description}
@@ -34,7 +34,7 @@ const TabItem = (props: Props): JSX.Element => {
             {convertKelvinToCelsius(min)} {symbols.celsius}
           </div>
         </div>
-        <div>{description}</div>
+        <div className="description">{description}</div>
       </section>
     </div>
   );

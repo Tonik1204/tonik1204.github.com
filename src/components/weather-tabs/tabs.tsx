@@ -22,15 +22,12 @@ class Tabs extends React.Component<TabsProps, TabsState> {
     selectedTab: this.props.defaultSelectedTab || this.props.tabs[0],
   };
 
-  switchTab = (selectedTab: WeatherTabItem) => {
+  handleSwitchTab = (selectedTab: WeatherTabItem) => () => {
     const { switchTabHandler } = this.props;
-    this.setState({ selectedTab });
-    if (switchTabHandler) {
-      switchTabHandler(selectedTab);
-    }
-  };
 
-  handleSwitchTab = (tab: WeatherTabItem) => () => this.switchTab(tab);
+    this.setState({ selectedTab });
+    switchTabHandler && switchTabHandler(selectedTab);
+  };
 
   render() {
     const { className, setTabContent, tabs } = this.props;

@@ -46,11 +46,13 @@ const TabContent = (props: Props): JSX.Element => {
           <IconData
             src={humidityIcon}
             alt="humidity"
+            className="humidity"
             data={`${item.humidity}%`}
           />
           <IconData
             src={pressureIcon}
             alt="pressure"
+            className="pressure"
             data={`${Math.round(item.pressure)} hpa`}
           />
           <IconData
