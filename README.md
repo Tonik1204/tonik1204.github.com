@@ -18,7 +18,7 @@ Current solution is fully responsive and fits all modern browsers.
 
 To start project locally just run `npm install` and then `npm start`, or if you preffer `yarn install` and `yarn start`.
 
-The only thing you need is the latest npm: `npm install npm@latest -g`
+The only thing you might need is the latest npm: `npm install npm@latest -g`
 
 No need to do additional `build` steps, http://localhost:3000/ should be opened automatically in your browser with current page.
 
