@@ -49,4 +49,4 @@ There are a lot of weather forecast apps with lots of data indicators and parame
 - Include IE 11 support
 - Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2)
 - Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16)
-- Add login/logout/register system and integrate with some analytical tool
+- Add login/logout/register system and bind app with some analytical tool
