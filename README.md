@@ -41,7 +41,7 @@ Watch Usage
 
 <!-- TOC -->
 
-There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution, based on new React Hooks API. Due to lack of possibility to try it on a real project, the curent app looks the best fit.
+There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution was built within 5 days, based on new React Hooks API. Due to lack of possibility to try it on a real project, the curent app looks the best fit.
 The idea is to create app without additional state container libraries(Redux) and use only React tools.
 
 ## Next steps
