@@ -39,7 +39,8 @@ Watch Usage
 
 <!-- TOC -->
 
-There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution, based on new React Hooks API. Due to lack of possibility right now to try it on a real project, the curent app looks the best fit.
+There are a lot of weather forecast apps with lots of data indicators and parameters. This is most simple and fast solution, based on new React Hooks API. Due to lack of possibility to try it on a real project, the curent app looks the best fit.
+The idea is to create app without additional state container libraries(Redux) and use only React tools.
 
 ## Next steps
 
@@ -49,4 +50,4 @@ There are a lot of weather forecast apps with lots of data indicators and parame
 - Include IE 11 support
 - Add weather map with help of [weather-map-api](https://openweathermap.org/api/weather-map-2)
 - Add 16 day / daily weather forecast with help of [weather-forecast-16](https://openweathermap.org/forecast16)
-- Add login/logout/register system and bind app with some analytical tool
+- Add routes, integrate login/logout/register system and bind app with some analytical tool
