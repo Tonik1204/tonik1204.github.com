@@ -8,7 +8,7 @@ Responsive single HTML page displaying a 5 day weather forecast.
 
 - Technology stack used: `React(Hooks), Typescript, styled-components, webpack, npm, axios, moment, jest, enzyme`.
 
-- API used: [weather-forecast](`https://openweathermap.org/forecast5`), [city-finder](`https://developers.teleport.org/api/`).
+- API used: [weather-forecast](https://openweathermap.org/forecast5), [city-finder](https://developers.teleport.org/api/).
 
 Current solution is fully responsive and fits all modern browsers.
 
