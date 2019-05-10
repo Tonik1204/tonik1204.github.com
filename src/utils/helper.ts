@@ -1,4 +1,4 @@
-const ZERO_KELVIN = -273.15;
+export const ZERO_KELVIN = -273;
 
 export const hasOnlyLetters = (value: string): boolean =>
   /^[A-Za-z]+$/.test(value);

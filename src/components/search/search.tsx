@@ -57,6 +57,7 @@ const Search = (props: Props) => {
       {isSearchLoading && <Spinner size="sm" />}
       <Input
         type="search"
+        name="search"
         value={search}
         placeholder="Enter a city"
         onChange={serachChangeHandler}
