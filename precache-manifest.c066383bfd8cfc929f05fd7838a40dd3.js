@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9321301bda8621dacc12bfd4b8360a92",
+    "revision": "3239ca41775be5f59de92fd2654aeed6",
     "url": "/weather-forecast/index.html"
   },
   {
@@ -12,16 +12,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/weather-forecast/static/js/2.7c7ec437.chunk.js"
   },
   {
-    "revision": "cab0c7ad55b71309d86b",
-    "url": "/weather-forecast/static/js/main.6eec2a99.chunk.js"
+    "revision": "147d64cd1170a3741e71",
+    "url": "/weather-forecast/static/js/main.cdde9d16.chunk.js"
   },
   {
     "revision": "c753dce0acc1d73f011b",
     "url": "/weather-forecast/static/js/runtime~main.ff5e48c9.js"
   },
   {
-    "revision": "5c87cbc954a005bd09a41b757adb7bd4",
-    "url": "/weather-forecast/static/media/day-sky.5c87cbc9.jpg"
+    "revision": "7499ef58698ae9f9c3eda06a90ee23f6",
+    "url": "/weather-forecast/static/media/day-sky.7499ef58.jpg"
   },
   {
     "revision": "539254f220b7ba35e1fc0497c6ade293",
@@ -116,15 +116,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/weather-forecast/static/media/lato-latin-900italic.fd67cf72.woff2"
   },
   {
-    "revision": "870e84aaed954172b5422e7eb60bf344",
-    "url": "/weather-forecast/static/media/night-sky.870e84aa.jpg"
+    "revision": "a8e17a6a71c9e3963f3b0f88357896d8",
+    "url": "/weather-forecast/static/media/night-sky.a8e17a6a.jpg"
   },
   {
     "revision": "120d33bcba8385f716d72fc50f144519",
     "url": "/weather-forecast/static/media/pressure.120d33bc.png"
   },
   {
-    "revision": "966932addf40da9dccfacad5d09b15da",
-    "url": "/weather-forecast/static/media/space.966932ad.jpg"
+    "revision": "b0dbeb160b3b544c4dfd447cba8158c4",
+    "url": "/weather-forecast/static/media/space.b0dbeb16.jpg"
   }
 ]);

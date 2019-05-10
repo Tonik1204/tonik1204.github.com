@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/weather-forecast/static/js/main.6eec2a99.chunk.js",
-    "main.js.map": "/weather-forecast/static/js/main.6eec2a99.chunk.js.map",
+    "main.js": "/weather-forecast/static/js/main.cdde9d16.chunk.js",
+    "main.js.map": "/weather-forecast/static/js/main.cdde9d16.chunk.js.map",
     "runtime~main.js": "/weather-forecast/static/js/runtime~main.ff5e48c9.js",
     "runtime~main.js.map": "/weather-forecast/static/js/runtime~main.ff5e48c9.js.map",
     "static/css/2.0dff16a8.chunk.css": "/weather-forecast/static/css/2.0dff16a8.chunk.css",
     "static/js/2.7c7ec437.chunk.js": "/weather-forecast/static/js/2.7c7ec437.chunk.js",
     "static/js/2.7c7ec437.chunk.js.map": "/weather-forecast/static/js/2.7c7ec437.chunk.js.map",
     "index.html": "/weather-forecast/index.html",
-    "precache-manifest.8a302fb5f34fe359683bd7bc0cd9114e.js": "/weather-forecast/precache-manifest.8a302fb5f34fe359683bd7bc0cd9114e.js",
+    "precache-manifest.c066383bfd8cfc929f05fd7838a40dd3.js": "/weather-forecast/precache-manifest.c066383bfd8cfc929f05fd7838a40dd3.js",
     "service-worker.js": "/weather-forecast/service-worker.js",
     "static/css/2.0dff16a8.chunk.css.map": "/weather-forecast/static/css/2.0dff16a8.chunk.css.map",
-    "static/media/day-sky.jpg": "/weather-forecast/static/media/day-sky.5c87cbc9.jpg",
+    "static/media/day-sky.jpg": "/weather-forecast/static/media/day-sky.7499ef58.jpg",
     "static/media/day.svg": "/weather-forecast/static/media/day.539254f2.svg",
     "static/media/fallout.png": "/weather-forecast/static/media/fallout.7d07a16b.png",
     "static/media/humidity.png": "/weather-forecast/static/media/humidity.00540d45.png",
     "static/media/index.css": "/weather-forecast/static/media/lato-latin-900italic.fd67cf72.woff2",
-    "static/media/night-sky.jpg": "/weather-forecast/static/media/night-sky.870e84aa.jpg",
+    "static/media/night-sky.jpg": "/weather-forecast/static/media/night-sky.a8e17a6a.jpg",
     "static/media/pressure.png": "/weather-forecast/static/media/pressure.120d33bc.png",
-    "static/media/space.jpg": "/weather-forecast/static/media/space.966932ad.jpg"
+    "static/media/space.jpg": "/weather-forecast/static/media/space.b0dbeb16.jpg"
   }
 }
