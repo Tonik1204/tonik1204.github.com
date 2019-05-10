@@ -94,8 +94,8 @@ const AppStyled = styled(App)`
     grid-template-columns: 7fr 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas: 'main aside';
-    background-color: ${!isDayTime ? colors.blue50 : colors.black700};
-    background-image: url(${!isDayTime ? dayImg : nightImg});
+    background-color: ${isDayTime ? colors.blue50 : colors.black700};
+    background-image: url(${isDayTime ? dayImg : nightImg});
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
