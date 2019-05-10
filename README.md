@@ -16,7 +16,7 @@ Current solution is fully responsive and fits all modern browsers.
 
 <!-- TOC -->
 
-The only thing you might need is the latest npm: `npm install npm@latest -g`
+Since `Create React App` uses latest packages, the only thing you might need is the latest npm: `npm install npm@latest -g`
 
 To start project locally just run `npm install` and then `npm start`, or if you preffer `yarn install` and `yarn start`.
 
