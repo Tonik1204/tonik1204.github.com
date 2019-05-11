@@ -19,7 +19,7 @@ const TabItem = (props: Props): JSX.Element => {
   return (
     <div className={className}>
       <section>
-        <strong className="date">{moment(date).format('ddd, Do')}</strong>
+        <strong className="date">{moment(date).format('ddd, Do MMM')}</strong>
         <img
           src={`${config.forecast_icons_url}${weather_icon}.png`}
           alt={description}
