@@ -75,6 +75,14 @@ const StyledTabs = styled(Tabs)`
         font-size: 1rem;
       }
 
+      @media ${device.laptop} {
+        font-size: 0.9rem;
+      }
+
+      @media ${device.mobile} {
+        font-size: 0.7rem;
+      }
+
       .tab {
         color: ${colors.text};
         flex-grow: 1;

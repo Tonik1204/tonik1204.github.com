@@ -28,6 +28,7 @@ const AsideStyled = styled(Aside)`
   display: flex;
   justify-content: center;
   padding: 1rem;
+  margin-top: 2rem;
 
   ${!isDayTime
     ? `
