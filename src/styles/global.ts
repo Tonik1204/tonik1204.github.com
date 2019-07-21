@@ -56,6 +56,11 @@ const GlobalStyles = createGlobalStyle`
     color: ${colors.text};
     text-decoration: none;
   }
+
+  #root {
+    display: flex;
+    flex: 1;
+  }
 `;
 
 export default GlobalStyles;
