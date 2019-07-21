@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f195ca398385feac1483560e78cdb412",
+    "revision": "60c2606e81a893d06f72e7f5cbb41600",
     "url": "/weather-forecast/index.html"
   },
   {
-    "revision": "696dc8417e75b2467823",
-    "url": "/weather-forecast/static/css/2.0dff16a8.chunk.css"
+    "revision": "e42ddae349fa4e973409",
+    "url": "/weather-forecast/static/css/2.8a69555f.chunk.css"
   },
   {
-    "revision": "696dc8417e75b2467823",
-    "url": "/weather-forecast/static/js/2.7c7ec437.chunk.js"
+    "revision": "e42ddae349fa4e973409",
+    "url": "/weather-forecast/static/js/2.fc196a73.chunk.js"
   },
   {
-    "revision": "e95eed3d9842d05b5dd4",
-    "url": "/weather-forecast/static/js/main.907210b7.chunk.js"
+    "revision": "a2d20affe854d6a679b2",
+    "url": "/weather-forecast/static/js/main.6b06d906.chunk.js"
   },
   {
     "revision": "c753dce0acc1d73f011b",
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/weather-forecast/static/media/day-sky.7499ef58.jpg"
   },
   {
-    "revision": "539254f220b7ba35e1fc0497c6ade293",
-    "url": "/weather-forecast/static/media/day.539254f2.svg"
+    "revision": "f15dda9a4967029d9b264729010c27e9",
+    "url": "/weather-forecast/static/media/day.f15dda9a.svg"
   },
   {
     "revision": "7d07a16b49dc75c3d65a0210528ae84f",
