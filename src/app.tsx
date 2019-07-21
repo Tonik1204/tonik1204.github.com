@@ -42,6 +42,7 @@ const AppStyled = styled(App)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  width: 100%;
 
   &.app-menu-opened .app-wrapper {
     transform: rotate(-6deg);
@@ -69,7 +70,7 @@ const AppStyled = styled(App)`
       'footer';
     transition: transform 1.25s;
     transform-origin: right top;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .app-header {
