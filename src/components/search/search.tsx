@@ -34,7 +34,7 @@ const Search = (props: Props) => {
 
   useEffect(() => {
     if (search.length > 2 && hasOnlyLetters(search)) {
-      doSearchFetch(config.city_api_url + search);
+      doSearchFetch(config.city_name_api_url + search);
     }
   }, [search, doSearchFetch]);
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import colors from 'styles/colors';
 import { device, isDayTime } from 'config/config';
@@ -7,6 +7,7 @@ import { Main } from 'components/main';
 import { Aside } from 'components/aside';
 import { Footer } from 'components/footer';
 import { Nav } from 'components/nav';
+import { GeolocationContext } from 'components/geolocation-store';
 import { MenuContext } from 'components/menu-context';
 import dayImg from 'assets/imgs/day-sky.jpg';
 import nightImg from 'assets/imgs/night-sky.jpg';
@@ -18,8 +19,11 @@ interface Props {
 
 const App = (props: Props) => {
   const { className } = props;
+  const { doGeolocationFetch } = useContext(GeolocationContext);
   const { isMenuOpen } = useContext(MenuContext);
   const menuOpenedClass = isMenuOpen ? 'app-menu-opened' : '';
+
+  useEffect(doGeolocationFetch, []);
 
   return (
     <div className={`${className} ${menuOpenedClass}`}>
