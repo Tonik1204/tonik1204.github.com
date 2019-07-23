@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useEffect, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import config from 'config/config';
 import Spinner from 'atoms/spinner';
 import WarningText from 'atoms/warning-text';
+import { GeolocationContext } from 'components/geolocation-store';
 import { WeatherContext } from 'components/weather-store';
 import { Toast } from 'components/toast-container';
 import TabContent from './tab-content';
@@ -79,9 +80,8 @@ const getAvarageItems = (data: any[][]): any[] => data.map(arr => arr[0]);
 
 const WeatherTabs = (props: Props) => {
   const { className } = props;
-  const [isLocating, setIsLocating] = useState<boolean>(true);
-  const [textContent, setTextContent] = useState<string>(
-    'Please, enter your city..',
+  const { isGeolocationLoading, geolocationError, coords } = useContext(
+    GeolocationContext,
   );
   const {
     isWeatherLoading,
@@ -89,31 +89,15 @@ const WeatherTabs = (props: Props) => {
     weatherData,
     doWeatherFetch,
   } = useContext(WeatherContext);
+
   const groupSize: number = weatherData.length / DAYS_AMOUNT;
 
   useEffect(() => {
-    function success(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      doWeatherFetch(config.forecast_api_url + `&lat=${lat}&lon=${lon}`);
-      setIsLocating(false);
+    const { lat, long } = coords;
+    if (lat && long) {
+      doWeatherFetch(config.forecast_api_url + `&lat=${lat}&lon=${long}`);
     }
-
-    function error() {
-      setIsLocating(false);
-      setTextContent(
-        'Unable to retrieve your location. Please, enter your city..',
-      );
-    }
-
-    if (navigator.geolocation) {
-      setTextContent('');
-      navigator.geolocation.getCurrentPosition(success, error);
-    } else {
-      setIsLocating(false);
-    }
-  }, [doWeatherFetch]);
+  }, [doWeatherFetch, coords]);
 
   const transformedData = useMemo(() => transformWeatherData(weatherData), [
     weatherData,
@@ -136,12 +120,12 @@ const WeatherTabs = (props: Props) => {
 
   return (
     <div className={className}>
-      {isWeatherLoading || isLocating ? (
+      {isGeolocationLoading || isWeatherLoading ? (
         <Spinner size="lg" />
       ) : avarageWeather.length ? (
         <Tabs tabs={avarageWeather} setTabContent={setTabContent} />
       ) : (
-        <WarningText>{textContent}</WarningText>
+        <WarningText>{geolocationError}</WarningText>
       )}
       <Toast show={isWeatherFetchingError} />
     </div>

@@ -5,7 +5,14 @@ enum ActionTypes {
   FETCH_INIT = 'search-city/fetch-init',
   FETCH_ERROR = 'search-city/fetch-error',
   FETCH_SUCCESS = 'search-city/fetch-success',
+  FETCH_BY_COORDS_SUCCESS = 'search-city/fetch-by-coords-success',
+  FETCH_BY_QUERY_SUCCESS = 'search-city/fetch-by-query-success',
   CLEAN_DATA = 'search-city/clean-data',
+}
+
+enum FetchingTypes {
+  FETCH_CITIY_BY_COORDS = 'city-by-coords',
+  FETCH_CITIES_BY_QUERY = 'cities-by-query',
 }
 
 interface CityItem {
@@ -16,6 +23,7 @@ interface CityItem {
 interface State {
   isSearchLoading: boolean;
   isSearchFetchingError: boolean;
+  cityName: string;
   searchData: CityItem[];
 }
 
@@ -26,19 +34,22 @@ interface Action {
 
 interface Context extends State {
   cleanSearchData: () => void;
-  doSearchFetch: (urlPath: string) => void;
+  doCityFetchByCoords: (urlPath: string) => void;
+  doCitiesFetchByQuery: (urlPath: string) => void;
 }
 
 const defaultState: State = {
   isSearchLoading: false,
   isSearchFetchingError: false,
+  cityName: '',
   searchData: [],
 };
 
 const defaultContext: Context = {
   ...defaultState,
   cleanSearchData: () => null,
-  doSearchFetch: () => null,
+  doCityFetchByCoords: () => null,
+  doCitiesFetchByQuery: () => null,
 };
 
 export const SearchContext = React.createContext(defaultContext);
@@ -56,6 +67,15 @@ const searchFetchReducer = (state: State, action: Action) => {
         ...state,
         isSearchLoading: false,
         isSearchFetchingError: false,
+      };
+    case ActionTypes.FETCH_BY_COORDS_SUCCESS:
+      return {
+        ...state,
+        cityName: action.payload,
+      };
+    case ActionTypes.FETCH_BY_QUERY_SUCCESS:
+      return {
+        ...state,
         searchData: [...action.payload],
       };
     case ActionTypes.CLEAN_DATA:
@@ -74,32 +94,33 @@ const searchFetchReducer = (state: State, action: Action) => {
   }
 };
 
-const getTransformCityData = (data: any[]): CityItem[] =>
+const getNearestCityName = (data: any[]): string =>
+  data.length ? data[0]._links['location:nearest-city'].name : '';
+
+const getTransformSearchData = (data: any[]): CityItem[] =>
   data.map(item => ({
     city: item._embedded['city:item'].name,
     country: item._embedded['city:item']._embedded['city:country'].name,
   }));
 
 const SearchStore = (props: any): JSX.Element => {
-  const [url, setUrl] = useState('');
+  const [fetchingType, setFetchingType] = useState<FetchingTypes>(
+    FetchingTypes.FETCH_CITIY_BY_COORDS,
+  );
+  const [url, setUrl] = useState<string>('');
   const [state, dispatch] = useReducer(searchFetchReducer, defaultState);
 
   useEffect(() => {
     let didCancel = false;
 
-    const fetchData = async () => {
+    const fetchData = async onSuccess => {
       dispatch({ type: ActionTypes.FETCH_INIT });
 
       try {
         const result = await axios(url);
 
-        if (!didCancel) {
-          dispatch({
-            type: ActionTypes.FETCH_SUCCESS,
-            payload: getTransformCityData(
-              result.data._embedded['city:search-results'],
-            ),
-          });
+        if (!didCancel && typeof result.data === 'object') {
+          onSuccess(result.data);
         }
       } catch (error) {
         if (!didCancel) {
@@ -108,14 +129,35 @@ const SearchStore = (props: any): JSX.Element => {
       }
     };
 
-    if (url) {
-      fetchData();
+    switch (fetchingType) {
+      case FetchingTypes.FETCH_CITIY_BY_COORDS:
+        fetchData(data => {
+          dispatch({ type: ActionTypes.FETCH_SUCCESS });
+          dispatch({
+            type: ActionTypes.FETCH_BY_COORDS_SUCCESS,
+            payload: getNearestCityName(
+              data._embedded['location:nearest-cities'],
+            ),
+          });
+        });
+        break;
+      case FetchingTypes.FETCH_CITIES_BY_QUERY:
+        fetchData(data => {
+          dispatch({ type: ActionTypes.FETCH_SUCCESS });
+          dispatch({
+            type: ActionTypes.FETCH_BY_QUERY_SUCCESS,
+            payload: getTransformSearchData(
+              data._embedded['city:search-results'],
+            ),
+          });
+        });
+        break;
     }
 
     return () => {
       didCancel = true;
     };
-  }, [url]);
+  }, [url, fetchingType]);
 
   const cleanSearchData = () => {
     dispatch({
@@ -123,8 +165,14 @@ const SearchStore = (props: any): JSX.Element => {
     });
   };
 
-  const doSearchFetch = (urlPath: string) => {
+  const doCityFetchByCoords = (urlPath: string) => {
     setUrl(urlPath);
+    setFetchingType(FetchingTypes.FETCH_CITIY_BY_COORDS);
+  };
+
+  const doCitiesFetchByQuery = (urlPath: string) => {
+    setUrl(urlPath);
+    setFetchingType(FetchingTypes.FETCH_CITIES_BY_QUERY);
   };
 
   return (
@@ -132,7 +180,8 @@ const SearchStore = (props: any): JSX.Element => {
       value={{
         ...state,
         cleanSearchData,
-        doSearchFetch,
+        doCityFetchByCoords,
+        doCitiesFetchByQuery,
       }}
     >
       {props.children}

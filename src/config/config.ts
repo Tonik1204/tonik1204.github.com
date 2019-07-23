@@ -6,7 +6,8 @@ const hours = new Date().getHours();
 
 const config = {
   forecast_api_url: `https://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}`,
-  city_api_url: `https://api.teleport.org/api/cities/?embed=city:search-results/city:item/{city:country,city:admin1_division,city:timezone/tz:offsets-now,city:urban_area}&limit=10&search=`,
+  cities_by_query_api_url: `https://api.teleport.org/api/cities/?embed=city:search-results/city:item/{city:country,city:admin1_division,city:timezone/tz:offsets-now,city:urban_area}&limit=10&search=`,
+  city_by_coords_api_url: `https://api.teleport.org/api/locations/`,
   forecast_icons_url: 'https://openweathermap.org/img/w/',
 };
 
