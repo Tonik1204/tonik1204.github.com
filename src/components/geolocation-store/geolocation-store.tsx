@@ -66,7 +66,7 @@ const geolocationFetchReducer = (state: State, action: Action) => {
 };
 
 const GeolocationStore = (props: any): JSX.Element => {
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState<boolean>(false);
   const [state, dispatch] = useReducer(geolocationFetchReducer, defaultState);
 
   useEffect(() => {

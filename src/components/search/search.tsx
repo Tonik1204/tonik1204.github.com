@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import config from 'config/config';
 import { hasOnlyLetters } from 'utils/helper';
+import { GeolocationContext } from 'components/geolocation-store';
 import { SearchContext } from 'components/search-store';
 import { WeatherContext } from 'components/weather-store';
 import { Toast } from 'components/toast-container';
@@ -17,12 +18,16 @@ const Search = (props: Props) => {
   const { className } = props;
   const [search, setSearch] = useState<string>('');
   const [hasFocus, setFocus] = useState<boolean>(false);
+
+  const { coords } = useContext(GeolocationContext);
   const {
     isSearchLoading,
     isSearchFetchingError,
+    cityName,
     searchData,
     cleanSearchData,
-    doSearchFetch,
+    doCityFetchByCoords,
+    doCitiesFetchByQuery,
   } = useContext(SearchContext);
   const { doWeatherFetch } = useContext(WeatherContext);
 
@@ -33,10 +38,21 @@ const Search = (props: Props) => {
   );
 
   useEffect(() => {
-    if (search.length > 2 && hasOnlyLetters(search)) {
-      doSearchFetch(config.city_name_api_url + search);
+    const { lat, long } = coords;
+    if (lat && long) {
+      doCityFetchByCoords(config.city_by_coords_api_url + `${lat}, ${long}`);
     }
-  }, [search, doSearchFetch]);
+  }, [coords, doCityFetchByCoords]);
+
+  useEffect(() => {
+    setSearch(cityName);
+  }, [cityName, setSearch]);
+
+  useEffect(() => {
+    if (search.length > 2 && hasOnlyLetters(search)) {
+      doCitiesFetchByQuery(config.cities_by_query_api_url + search);
+    }
+  }, [search, doCitiesFetchByQuery]);
 
   const dropdownSelectHandler = (value: string): void => {
     const query = value.replace(' ', '');
