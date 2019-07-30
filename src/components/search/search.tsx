@@ -4,7 +4,6 @@ import config from 'config/config';
 import { hasOnlyLetters } from 'utils/helper';
 import { GeolocationContext } from 'components/geolocation-store';
 import { SearchContext } from 'components/search-store';
-import { WeatherContext } from 'components/weather-store';
 import { Toast } from 'components/toast-container';
 import Spinner from 'atoms/spinner';
 import Dropdown from 'atoms/dropdown';
@@ -25,11 +24,11 @@ const Search = (props: Props) => {
     isSearchFetchingError,
     cityName,
     searchData,
+    setCityName,
     cleanSearchData,
     doCityFetchByCoords,
     doCitiesFetchByQuery,
   } = useContext(SearchContext);
-  const { doWeatherFetch } = useContext(WeatherContext);
 
   const showDropdown: boolean = !!searchData.length && hasFocus;
   const dropdownItems = useMemo(
@@ -55,10 +54,8 @@ const Search = (props: Props) => {
   }, [search, doCitiesFetchByQuery]);
 
   const dropdownSelectHandler = (value: string): void => {
-    const query = value.replace(' ', '');
-    setSearch(value);
+    setCityName(value);
     cleanSearchData();
-    doWeatherFetch(config.forecast_api_url + `&q=${query}`);
   };
 
   const serachChangeHandler = (e: React.SyntheticEvent): void => {

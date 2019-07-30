@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { isDayTime } from 'config/config';
+import { SunTimer } from 'components/sun-timer';
 import colors from 'styles/colors';
 import Clock from 'react-clock';
 
@@ -20,13 +21,15 @@ const Aside = (props: Props) => {
   return (
     <aside className={className}>
       <Clock value={date} />
+      <SunTimer />
     </aside>
   );
 };
 
 const AsideStyled = styled(Aside)`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 1rem;
   margin-top: 2rem;
 

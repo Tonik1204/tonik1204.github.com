@@ -4,6 +4,7 @@ import config from 'config/config';
 import Spinner from 'atoms/spinner';
 import WarningText from 'atoms/warning-text';
 import { GeolocationContext } from 'components/geolocation-store';
+import { SearchContext } from 'components/search-store';
 import { WeatherContext } from 'components/weather-store';
 import { Toast } from 'components/toast-container';
 import TabContent from './tab-content';
@@ -34,7 +35,7 @@ interface Props {
 
 const DAYS_AMOUNT: number = 5;
 
-const transformWeatherData = (data: any[]): WeatherItem[] =>
+const transformForecastData = (data: any[]): WeatherItem[] =>
   data.map((item, i) => ({
     id: i,
     date: item.dt_txt,
@@ -83,24 +84,31 @@ const WeatherTabs = (props: Props) => {
   const { isGeolocationLoading, geolocationError, coords } = useContext(
     GeolocationContext,
   );
+  const { cityName } = useContext(SearchContext);
   const {
-    isWeatherLoading,
-    isWeatherFetchingError,
-    weatherData,
-    doWeatherFetch,
+    isForecastLoading,
+    isForecastFetchingError,
+    forecastData,
+    doForecastFetch,
   } = useContext(WeatherContext);
 
-  const groupSize: number = weatherData.length / DAYS_AMOUNT;
+  const groupSize: number = forecastData.length / DAYS_AMOUNT;
 
   useEffect(() => {
     const { lat, long } = coords;
-    if (lat && long) {
-      doWeatherFetch(config.forecast_api_url + `&lat=${lat}&lon=${long}`);
-    }
-  }, [doWeatherFetch, coords]);
+    const search = cityName.includes(',')
+      ? `&q=${cityName.replace(' ', '')}`
+      : lat && long
+      ? `&lat=${lat}&lon=${long}`
+      : '';
 
-  const transformedData = useMemo(() => transformWeatherData(weatherData), [
-    weatherData,
+    if (search) {
+      doForecastFetch(config.forecast_api_url + search);
+    }
+  }, [doForecastFetch, coords, cityName]);
+
+  const transformedData = useMemo(() => transformForecastData(forecastData), [
+    forecastData,
   ]);
 
   const groupedWeather = useMemo(
@@ -120,14 +128,14 @@ const WeatherTabs = (props: Props) => {
 
   return (
     <div className={className}>
-      {isGeolocationLoading || isWeatherLoading ? (
+      {isGeolocationLoading || isForecastLoading ? (
         <Spinner size="lg" />
       ) : avarageWeather.length ? (
         <Tabs tabs={avarageWeather} setTabContent={setTabContent} />
       ) : (
         <WarningText>{geolocationError}</WarningText>
       )}
-      <Toast show={isWeatherFetchingError} />
+      <Toast show={isForecastFetchingError} />
     </div>
   );
 };
