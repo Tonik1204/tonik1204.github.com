@@ -2,15 +2,15 @@ import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 enum ActionTypes {
-  FETCH_INIT = 'weather-forecast/fetch-init',
-  FETCH_ERROR = 'weather-forecast/fetch-error',
-  FETCH_SUCCESS = 'weather-forecast/fetch-success',
+  WEATHER_FETCH_INIT = 'weather/fetch-init',
+  WEATHER_FETCH_ERROR = 'weather/fetch-error',
+  WEATHER_FETCH_SUCCESS = 'weather/fetch-success',
 }
 
 interface State {
   isWeatherLoading: boolean;
   isWeatherFetchingError: boolean;
-  weatherData: any[];
+  weatherData: any;
 }
 
 interface Action {
@@ -25,7 +25,7 @@ interface Context extends State {
 const defaultState: State = {
   isWeatherLoading: false,
   isWeatherFetchingError: false,
-  weatherData: [],
+  weatherData: {},
 };
 
 const defaultContext: Context = {
@@ -35,22 +35,22 @@ const defaultContext: Context = {
 
 export const WeatherContext = React.createContext(defaultContext);
 
-const weatherFetchReducer = (state: State, action: Action) => {
+const weatherReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_INIT:
+    case ActionTypes.WEATHER_FETCH_INIT:
       return {
         ...state,
         isWeatherLoading: true,
         isWeatherFetchingError: false,
       };
-    case ActionTypes.FETCH_SUCCESS:
+    case ActionTypes.WEATHER_FETCH_SUCCESS:
       return {
         ...state,
         isWeatherLoading: false,
         isWeatherFetchingError: false,
-        weatherData: [...action.payload],
+        weatherData: { ...action.payload },
       };
-    case ActionTypes.FETCH_ERROR:
+    case ActionTypes.WEATHER_FETCH_ERROR:
       return {
         ...state,
         isWeatherLoading: false,
@@ -63,26 +63,26 @@ const weatherFetchReducer = (state: State, action: Action) => {
 
 const WeatherStore = (props: any): JSX.Element => {
   const [url, setUrl] = useState('');
-  const [state, dispatch] = useReducer(weatherFetchReducer, defaultState);
+  const [state, dispatch] = useReducer(weatherReducer, defaultState);
 
   useEffect(() => {
     let didCancel = false;
 
     const fetchData = async () => {
-      dispatch({ type: ActionTypes.FETCH_INIT });
+      dispatch({ type: ActionTypes.WEATHER_FETCH_INIT });
 
       try {
         const result = await axios(url);
 
-        if (!didCancel) {
+        if (!didCancel && typeof result.data === 'object') {
           dispatch({
-            type: ActionTypes.FETCH_SUCCESS,
-            payload: result.data.list,
+            type: ActionTypes.WEATHER_FETCH_SUCCESS,
+            payload: result.data.sys,
           });
         }
       } catch (error) {
         if (!didCancel) {
-          dispatch({ type: ActionTypes.FETCH_ERROR });
+          dispatch({ type: ActionTypes.WEATHER_FETCH_ERROR });
         }
       }
     };

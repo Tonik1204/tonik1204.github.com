@@ -7,23 +7,30 @@ enum ActionTypes {
   FETCH_SUCCESS = 'search-city/fetch-success',
   FETCH_BY_COORDS_SUCCESS = 'search-city/fetch-by-coords-success',
   FETCH_BY_QUERY_SUCCESS = 'search-city/fetch-by-query-success',
+  SET_CITY_DATA = 'search-city/set-city-data',
   CLEAN_DATA = 'search-city/clean-data',
 }
 
 enum FetchingTypes {
-  FETCH_CITIY_BY_COORDS = 'city-by-coords',
-  FETCH_CITIES_BY_QUERY = 'cities-by-query',
+  FETCH_CITIY_BY_COORDS = 'CITY_BY_COORDS',
+  FETCH_CITIES_BY_QUERY = 'CITIES_BY_QUERY',
 }
 
 interface CityItem {
+  id: number;
   city: string;
   country: string;
+}
+
+interface CityData {
+  id: number;
+  name: string;
 }
 
 interface State {
   isSearchLoading: boolean;
   isSearchFetchingError: boolean;
-  cityName: string;
+  cityData: CityData;
   searchData: CityItem[];
 }
 
@@ -33,6 +40,7 @@ interface Action {
 }
 
 interface Context extends State {
+  setCityData: (data: CityData) => void;
   cleanSearchData: () => void;
   doCityFetchByCoords: (urlPath: string) => void;
   doCitiesFetchByQuery: (urlPath: string) => void;
@@ -41,12 +49,13 @@ interface Context extends State {
 const defaultState: State = {
   isSearchLoading: false,
   isSearchFetchingError: false,
-  cityName: '',
+  cityData: { id: 0, name: '' },
   searchData: [],
 };
 
 const defaultContext: Context = {
   ...defaultState,
+  setCityData: () => null,
   cleanSearchData: () => null,
   doCityFetchByCoords: () => null,
   doCitiesFetchByQuery: () => null,
@@ -69,9 +78,10 @@ const searchFetchReducer = (state: State, action: Action) => {
         isSearchFetchingError: false,
       };
     case ActionTypes.FETCH_BY_COORDS_SUCCESS:
+    case ActionTypes.SET_CITY_DATA:
       return {
         ...state,
-        cityName: action.payload,
+        cityData: { ...action.payload },
       };
     case ActionTypes.FETCH_BY_QUERY_SUCCESS:
       return {
@@ -99,14 +109,13 @@ const getNearestCityName = (data: any[]): string =>
 
 const getTransformSearchData = (data: any[]): CityItem[] =>
   data.map(item => ({
+    id: item._embedded['city:item'].geoname_id,
     city: item._embedded['city:item'].name,
     country: item._embedded['city:item']._embedded['city:country'].name,
   }));
 
 const SearchStore = (props: any): JSX.Element => {
-  const [fetchingType, setFetchingType] = useState<FetchingTypes>(
-    FetchingTypes.FETCH_CITIY_BY_COORDS,
-  );
+  const [fetchingType, setFetchingType] = useState<FetchingTypes | null>(null);
   const [url, setUrl] = useState<string>('');
   const [state, dispatch] = useReducer(searchFetchReducer, defaultState);
 
@@ -135,9 +144,12 @@ const SearchStore = (props: any): JSX.Element => {
           dispatch({ type: ActionTypes.FETCH_SUCCESS });
           dispatch({
             type: ActionTypes.FETCH_BY_COORDS_SUCCESS,
-            payload: getNearestCityName(
-              data._embedded['location:nearest-cities'],
-            ),
+            payload: {
+              id: 0,
+              name: getNearestCityName(
+                data._embedded['location:nearest-cities'],
+              ),
+            },
           });
         });
         break;
@@ -159,6 +171,13 @@ const SearchStore = (props: any): JSX.Element => {
     };
   }, [url, fetchingType]);
 
+  const setCityData = (data: CityData) => {
+    dispatch({
+      type: ActionTypes.SET_CITY_DATA,
+      payload: data,
+    });
+  };
+
   const cleanSearchData = () => {
     dispatch({
       type: ActionTypes.CLEAN_DATA,
@@ -179,6 +198,7 @@ const SearchStore = (props: any): JSX.Element => {
     <SearchContext.Provider
       value={{
         ...state,
+        setCityData,
         cleanSearchData,
         doCityFetchByCoords,
         doCitiesFetchByQuery,

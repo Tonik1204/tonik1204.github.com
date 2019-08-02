@@ -1,10 +1,12 @@
-import React, { useEffect, useContext, useMemo } from 'react';
+import React, { useEffect, useContext, useMemo, useRef } from 'react';
 import styled from 'styled-components';
+import colors from 'styles/colors';
 import config from 'config/config';
 import Spinner from 'atoms/spinner';
 import WarningText from 'atoms/warning-text';
 import { GeolocationContext } from 'components/geolocation-store';
-import { WeatherContext } from 'components/weather-store';
+import { SearchContext } from 'components/search-store';
+import { ForecastContext } from 'components/forecast-store';
 import { Toast } from 'components/toast-container';
 import TabContent from './tab-content';
 import Tabs from './tabs';
@@ -34,7 +36,7 @@ interface Props {
 
 const DAYS_AMOUNT: number = 5;
 
-const transformWeatherData = (data: any[]): WeatherItem[] =>
+const transformForecastData = (data: any[]): WeatherItem[] =>
   data.map((item, i) => ({
     id: i,
     date: item.dt_txt,
@@ -83,24 +85,31 @@ const WeatherTabs = (props: Props) => {
   const { isGeolocationLoading, geolocationError, coords } = useContext(
     GeolocationContext,
   );
+  const { cityData } = useContext(SearchContext);
   const {
-    isWeatherLoading,
-    isWeatherFetchingError,
-    weatherData,
-    doWeatherFetch,
-  } = useContext(WeatherContext);
+    isForecastLoading,
+    isForecastFetchingError,
+    forecastData,
+  } = useContext(ForecastContext);
 
-  const groupSize: number = weatherData.length / DAYS_AMOUNT;
+  const forecastStore = useRef(useContext(ForecastContext));
+
+  const { lat, long } = coords;
+  const groupSize: number = forecastData.length / DAYS_AMOUNT;
+  const search = cityData.id
+    ? `&id=${cityData.id}`
+    : lat && long
+    ? `&lat=${lat}&lon=${long}`
+    : '';
 
   useEffect(() => {
-    const { lat, long } = coords;
-    if (lat && long) {
-      doWeatherFetch(config.forecast_api_url + `&lat=${lat}&lon=${long}`);
+    if (search) {
+      forecastStore.current.doForecastFetch(config.forecast_api_url + search);
     }
-  }, [doWeatherFetch, coords]);
+  }, [search]);
 
-  const transformedData = useMemo(() => transformWeatherData(weatherData), [
-    weatherData,
+  const transformedData = useMemo(() => transformForecastData(forecastData), [
+    forecastData,
   ]);
 
   const groupedWeather = useMemo(
@@ -120,14 +129,14 @@ const WeatherTabs = (props: Props) => {
 
   return (
     <div className={className}>
-      {isGeolocationLoading || isWeatherLoading ? (
+      {isGeolocationLoading || isForecastLoading ? (
         <Spinner size="lg" />
       ) : avarageWeather.length ? (
         <Tabs tabs={avarageWeather} setTabContent={setTabContent} />
       ) : (
         <WarningText>{geolocationError}</WarningText>
       )}
-      <Toast show={isWeatherFetchingError} />
+      <Toast show={isForecastFetchingError} />
     </div>
   );
 };
@@ -137,6 +146,7 @@ const WeatherTabsStyled = styled(WeatherTabs)`
   justify-content: center;
   align-items: center;
   height: 100%;
+  color: ${colors.text};
 `;
 
 export default WeatherTabsStyled;

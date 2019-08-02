@@ -63,6 +63,10 @@ const StyledTabs = styled(Tabs)`
     cursor: pointer;
     margin: 5rem 5rem 0 6rem;
 
+    @media ${device.laptop} {
+      margin-top: 1rem;
+    }
+
     .tabs-menu-wrap {
       display: flex;
       height: 11rem;

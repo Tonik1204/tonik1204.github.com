@@ -11,7 +11,7 @@ import Spinner from 'atoms/spinner';
 import ToastMessage from 'atoms/toast-message';
 import WarningText from 'atoms/warning-text';
 
-const dropdownData = ['test1', 'test2'];
+const dropdownData = [{ id: 1, name: 'test1' }, { id: 2, name: 'test2' }];
 
 describe('AppTitle', () => {
   it('renders correctly', () => {
@@ -30,13 +30,13 @@ describe('Dropdown', () => {
         .find('.dropdown-item')
         .at(0)
         .text(),
-    ).toBe(dropdownData[0]);
+    ).toBe(dropdownData[0].name);
     expect(
       wrapper
         .find('.dropdown-item')
         .at(1)
         .text(),
-    ).toBe(dropdownData[1]);
+    ).toBe(dropdownData[1].name);
   });
 
   it('handles select correctly', () => {

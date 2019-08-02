@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const ZERO_KELVIN = -273;
 
 export const hasOnlyLetters = (value: string): boolean =>
@@ -5,3 +7,6 @@ export const hasOnlyLetters = (value: string): boolean =>
 
 export const convertKelvinToCelsius = (value: number): number =>
   Math.round(value + ZERO_KELVIN);
+
+export const getSunData = (text: string, time: number): string =>
+  `${text} - ${moment(time * 1000).format('HH:mm')}`;

@@ -1,4 +1,4 @@
-const API_KEY = '19dbd912b0a14c54b850b2f480f357fc';
+const API_KEY = '815ff957e494df171ee806f8a1f69195';
 const MAX_DAY_HOURS = 20;
 const MIN_DAY_HOURS = 6;
 
@@ -6,6 +6,7 @@ const hours = new Date().getHours();
 
 const config = {
   forecast_api_url: `https://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}`,
+  weather_api_url: `https://api.openweathermap.org/data/2.5/weather?APPID=${API_KEY}`,
   cities_by_query_api_url: `https://api.teleport.org/api/cities/?embed=city:search-results/city:item/{city:country,city:admin1_division,city:timezone/tz:offsets-now,city:urban_area}&limit=10&search=`,
   city_by_coords_api_url: `https://api.teleport.org/api/locations/`,
   forecast_icons_url: 'https://openweathermap.org/img/w/',
