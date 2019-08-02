@@ -56,6 +56,8 @@ const COLORS = {
 const colors = {
   ...COLORS,
   text: COLORS.black,
+  day: COLORS.black,
+  night: COLORS.white,
 };
 
 const responses = {

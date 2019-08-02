@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import config from 'config/config';
 import { hasOnlyLetters } from 'utils/helper';
@@ -26,9 +26,9 @@ const Search = (props: Props) => {
     searchData,
     setCityName,
     cleanSearchData,
-    doCityFetchByCoords,
-    doCitiesFetchByQuery,
   } = useContext(SearchContext);
+
+  const searchStore = useRef(useContext(SearchContext));
 
   const showDropdown: boolean = !!searchData.length && hasFocus;
   const dropdownItems = useMemo(
@@ -39,19 +39,23 @@ const Search = (props: Props) => {
   useEffect(() => {
     const { lat, long } = coords;
     if (lat && long) {
-      doCityFetchByCoords(config.city_by_coords_api_url + `${lat}, ${long}`);
+      searchStore.current.doCityFetchByCoords(
+        config.city_by_coords_api_url + `${lat}, ${long}`,
+      );
     }
-  }, [coords, doCityFetchByCoords]);
+  }, [coords]);
 
   useEffect(() => {
     setSearch(cityName);
-  }, [cityName, setSearch]);
+  }, [cityName]);
 
   useEffect(() => {
     if (search.length > 2 && hasOnlyLetters(search)) {
-      doCitiesFetchByQuery(config.cities_by_query_api_url + search);
+      searchStore.current.doCitiesFetchByQuery(
+        config.cities_by_query_api_url + search,
+      );
     }
-  }, [search, doCitiesFetchByQuery]);
+  }, [search]);
 
   const dropdownSelectHandler = (value: string): void => {
     setCityName(value);

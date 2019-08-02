@@ -101,6 +101,7 @@ const AppStyled = styled(App)`
     grid-template-areas: 'main aside';
     background-color: ${isDayTime ? colors.blue50 : colors.black700};
     background-image: url(${isDayTime ? dayImg : nightImg});
+    color: ${isDayTime ? colors.day : colors.night};
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

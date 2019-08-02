@@ -108,9 +108,7 @@ const getTransformSearchData = (data: any[]): CityItem[] =>
   }));
 
 const SearchStore = (props: any): JSX.Element => {
-  const [fetchingType, setFetchingType] = useState<FetchingTypes>(
-    FetchingTypes.FETCH_CITIY_BY_COORDS,
-  );
+  const [fetchingType, setFetchingType] = useState<FetchingTypes | null>(null);
   const [url, setUrl] = useState<string>('');
   const [state, dispatch] = useReducer(searchFetchReducer, defaultState);
 

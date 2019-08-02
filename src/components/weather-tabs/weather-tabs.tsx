@@ -1,11 +1,12 @@
-import React, { useEffect, useContext, useMemo } from 'react';
+import React, { useEffect, useContext, useMemo, useRef } from 'react';
 import styled from 'styled-components';
+import colors from 'styles/colors';
 import config from 'config/config';
 import Spinner from 'atoms/spinner';
 import WarningText from 'atoms/warning-text';
 import { GeolocationContext } from 'components/geolocation-store';
 import { SearchContext } from 'components/search-store';
-import { WeatherContext } from 'components/weather-store';
+import { ForecastContext } from 'components/forecast-store';
 import { Toast } from 'components/toast-container';
 import TabContent from './tab-content';
 import Tabs from './tabs';
@@ -89,23 +90,23 @@ const WeatherTabs = (props: Props) => {
     isForecastLoading,
     isForecastFetchingError,
     forecastData,
-    doForecastFetch,
-  } = useContext(WeatherContext);
+  } = useContext(ForecastContext);
 
+  const forecastStore = useRef(useContext(ForecastContext));
+
+  const { lat, long } = coords;
   const groupSize: number = forecastData.length / DAYS_AMOUNT;
+  const search = cityName.includes(',')
+    ? `&q=${cityName.replace(' ', '')}`
+    : lat && long
+    ? `&lat=${lat}&lon=${long}`
+    : '';
 
   useEffect(() => {
-    const { lat, long } = coords;
-    const search = cityName.includes(',')
-      ? `&q=${cityName.replace(' ', '')}`
-      : lat && long
-      ? `&lat=${lat}&lon=${long}`
-      : '';
-
     if (search) {
-      doForecastFetch(config.forecast_api_url + search);
+      forecastStore.current.doForecastFetch(config.forecast_api_url + search);
     }
-  }, [doForecastFetch, coords, cityName]);
+  }, [search]);
 
   const transformedData = useMemo(() => transformForecastData(forecastData), [
     forecastData,
@@ -145,6 +146,7 @@ const WeatherTabsStyled = styled(WeatherTabs)`
   justify-content: center;
   align-items: center;
   height: 100%;
+  color: ${colors.text};
 `;
 
 export default WeatherTabsStyled;

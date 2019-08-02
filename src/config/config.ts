@@ -1,4 +1,4 @@
-const API_KEY = '19dbd912b0a14c54b850b2f480f357fc';
+const API_KEY = '815ff957e494df171ee806f8a1f69195';
 const MAX_DAY_HOURS = 20;
 const MIN_DAY_HOURS = 6;
 
