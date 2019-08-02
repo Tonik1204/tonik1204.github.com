@@ -85,7 +85,7 @@ const WeatherTabs = (props: Props) => {
   const { isGeolocationLoading, geolocationError, coords } = useContext(
     GeolocationContext,
   );
-  const { cityName } = useContext(SearchContext);
+  const { cityData } = useContext(SearchContext);
   const {
     isForecastLoading,
     isForecastFetchingError,
@@ -96,8 +96,8 @@ const WeatherTabs = (props: Props) => {
 
   const { lat, long } = coords;
   const groupSize: number = forecastData.length / DAYS_AMOUNT;
-  const search = cityName.includes(',')
-    ? `&q=${cityName.replace(' ', '')}`
+  const search = cityData.id
+    ? `&id=${cityData.id}`
     : lat && long
     ? `&lat=${lat}&lon=${long}`
     : '';

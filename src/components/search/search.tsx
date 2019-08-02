@@ -6,7 +6,7 @@ import { GeolocationContext } from 'components/geolocation-store';
 import { SearchContext } from 'components/search-store';
 import { Toast } from 'components/toast-container';
 import Spinner from 'atoms/spinner';
-import Dropdown from 'atoms/dropdown';
+import Dropdown, { Item as DropdownItem } from 'atoms/dropdown';
 import Input from 'atoms/input';
 
 interface Props {
@@ -22,9 +22,9 @@ const Search = (props: Props) => {
   const {
     isSearchLoading,
     isSearchFetchingError,
-    cityName,
+    cityData,
     searchData,
-    setCityName,
+    setCityData,
     cleanSearchData,
   } = useContext(SearchContext);
 
@@ -32,7 +32,11 @@ const Search = (props: Props) => {
 
   const showDropdown: boolean = !!searchData.length && hasFocus;
   const dropdownItems = useMemo(
-    () => searchData.map(({ city, country }) => `${city}, ${country}`),
+    () =>
+      searchData.map(({ id, city, country }) => ({
+        id,
+        name: `${city}, ${country}`,
+      })),
     [searchData],
   );
 
@@ -46,8 +50,8 @@ const Search = (props: Props) => {
   }, [coords]);
 
   useEffect(() => {
-    setSearch(cityName);
-  }, [cityName]);
+    setSearch(cityData.name);
+  }, [cityData]);
 
   useEffect(() => {
     if (search.length > 2 && hasOnlyLetters(search)) {
@@ -57,8 +61,8 @@ const Search = (props: Props) => {
     }
   }, [search]);
 
-  const dropdownSelectHandler = (value: string): void => {
-    setCityName(value);
+  const dropdownSelectHandler = (value: DropdownItem): void => {
+    setCityData(value);
     cleanSearchData();
   };
 

@@ -18,7 +18,7 @@ interface Props {
 const SunTimer = (props: Props) => {
   const { className } = props;
   const { isGeolocationLoading, coords } = useContext(GeolocationContext);
-  const { cityName } = useContext(SearchContext);
+  const { cityData } = useContext(SearchContext);
   const { isWeatherLoading, isWeatherFetchingError, weatherData } = useContext(
     WeatherContext,
   );
@@ -29,8 +29,8 @@ const SunTimer = (props: Props) => {
   const { lat, long } = coords;
   const sunriseData = getSunData('Sunrise', sunrise);
   const sunsetData = getSunData('Sunset', sunset);
-  const search = cityName.includes(',')
-    ? `&q=${cityName.replace(' ', '')}`
+  const search = cityData.id
+    ? `&id=${cityData.id}`
     : lat && long
     ? `&lat=${lat}&lon=${long}`
     : '';

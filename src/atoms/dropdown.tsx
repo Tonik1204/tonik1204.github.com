@@ -2,30 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from 'styles/colors';
 
+export interface Item {
+  id: number;
+  name: string;
+}
+
 interface Props {
-	className?: string;
-	items: string[];
-	onSelect?: (item: string) => void;
+  className?: string;
+  items: Item[];
+  onSelect?: (item: Item) => void;
 }
 
 const Dropdown = (props: Props): JSX.Element => {
-	const { className, items, onSelect } = props;
+  const { className, items, onSelect } = props;
 
-	const clickHandler = (item: string) => () => onSelect && onSelect(item);
+  const clickHandler = (item: Item) => () => onSelect && onSelect(item);
 
-	return (
-		<div className={`${className} dropdown`}>
-			{items.map((item, key) => (
-				<div
-					className="dropdown-item"
-					key={key}
-					onMouseDown={clickHandler(item)}
-				>
-					{item}
-				</div>
-			))}
-		</div>
-	);
+  return (
+    <div className={`${className} dropdown`}>
+      {items.map((item, key) => (
+        <div
+          className="dropdown-item"
+          key={item.id || key}
+          onMouseDown={clickHandler(item)}
+        >
+          {item.name}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 const DropdownStyled = styled(Dropdown)`
