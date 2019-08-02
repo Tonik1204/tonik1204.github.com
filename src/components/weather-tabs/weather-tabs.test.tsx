@@ -40,8 +40,8 @@ const tabsMock = [
 describe('WeatherTabsWrapper', () => {
   it('renders correctly', () => {
     const wrapper = document.createElement('div');
-    ReactDOM.render(<WeatherTabs />, wrapper);
-    expect(wrapper.querySelectorAll('.spinner')).toHaveLength(1);
+    ReactDOM.render(<WeatherTabs className="test" />, wrapper);
+    expect(wrapper.querySelectorAll('.test')).toHaveLength(1);
   });
 });
 
@@ -109,7 +109,7 @@ describe('WeatherTabItem', () => {
   it('renders with props', () => {
     const wrapper = mount(<TabItem data={tabsMock} />);
     expect(wrapper.find('.date').text()).toBe(
-      moment(tabsMock.date).format('ddd, Do'),
+      moment(tabsMock.date).format('ddd, Do MMM'),
     );
   });
 });
