@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 
 enum ActionTypes {
@@ -19,7 +19,7 @@ interface Action {
 }
 
 interface Context extends State {
-  doWeatherFetch: (urlPath: string) => void;
+  doWeatherFetch: (url: string) => void;
 }
 
 const defaultState: State = {
@@ -30,7 +30,7 @@ const defaultState: State = {
 
 const defaultContext: Context = {
   ...defaultState,
-  doWeatherFetch: () => null,
+  doWeatherFetch: async () => null,
 };
 
 export const WeatherContext = React.createContext(defaultContext);
@@ -62,42 +62,23 @@ const weatherReducer = (state: State, action: Action) => {
 };
 
 const WeatherStore = (props: any): JSX.Element => {
-  const [url, setUrl] = useState('');
   const [state, dispatch] = useReducer(weatherReducer, defaultState);
 
-  useEffect(() => {
-    let didCancel = false;
+  const doWeatherFetch = async (url: string) => {
+    dispatch({ type: ActionTypes.WEATHER_FETCH_INIT });
 
-    const fetchData = async () => {
-      dispatch({ type: ActionTypes.WEATHER_FETCH_INIT });
+    try {
+      const result = await axios(url);
 
-      try {
-        const result = await axios(url);
-
-        if (!didCancel && typeof result.data === 'object') {
-          dispatch({
-            type: ActionTypes.WEATHER_FETCH_SUCCESS,
-            payload: result.data.sys,
-          });
-        }
-      } catch (error) {
-        if (!didCancel) {
-          dispatch({ type: ActionTypes.WEATHER_FETCH_ERROR });
-        }
+      if (typeof result.data === 'object') {
+        dispatch({
+          type: ActionTypes.WEATHER_FETCH_SUCCESS,
+          payload: result.data.sys,
+        });
       }
-    };
-
-    if (url) {
-      fetchData();
+    } catch (error) {
+      dispatch({ type: ActionTypes.WEATHER_FETCH_ERROR });
     }
-
-    return () => {
-      didCancel = true;
-    };
-  }, [url]);
-
-  const doWeatherFetch = (urlPath: string) => {
-    setUrl(urlPath);
   };
 
   return (
