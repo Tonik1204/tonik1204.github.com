@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 
 enum ActionTypes {
@@ -62,42 +62,23 @@ const forecastReducer = (state: State, action: Action) => {
 };
 
 const ForecastStore = (props: any): JSX.Element => {
-  const [url, setUrl] = useState('');
   const [state, dispatch] = useReducer(forecastReducer, defaultState);
 
-  useEffect(() => {
-    let didCancel = false;
+  const doForecastFetch = async (url: string) => {
+    dispatch({ type: ActionTypes.FORECAST_FETCH_INIT });
 
-    const fetchData = async () => {
-      dispatch({ type: ActionTypes.FORECAST_FETCH_INIT });
+    try {
+      const result = await axios(url);
 
-      try {
-        const result = await axios(url);
-
-        if (!didCancel && typeof result.data === 'object') {
-          dispatch({
-            type: ActionTypes.FORECAST_FETCH_SUCCESS,
-            payload: result.data.list,
-          });
-        }
-      } catch (error) {
-        if (!didCancel) {
-          dispatch({ type: ActionTypes.FORECAST_FETCH_ERROR });
-        }
+      if (typeof result.data === 'object') {
+        dispatch({
+          type: ActionTypes.FORECAST_FETCH_SUCCESS,
+          payload: result.data.list,
+        });
       }
-    };
-
-    if (url) {
-      fetchData();
+    } catch (error) {
+      dispatch({ type: ActionTypes.FORECAST_FETCH_ERROR });
     }
-
-    return () => {
-      didCancel = true;
-    };
-  }, [url]);
-
-  const doForecastFetch = (urlPath: string) => {
-    setUrl(urlPath);
   };
 
   return (

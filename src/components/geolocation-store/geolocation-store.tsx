@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 
 enum ActionTypes {
   FETCH_INIT = 'geolocation/fetch-init',
@@ -66,58 +66,35 @@ const geolocationFetchReducer = (state: State, action: Action) => {
 };
 
 const GeolocationStore = (props: any): JSX.Element => {
-  const [fetching, setFetching] = useState<boolean>(false);
   const [state, dispatch] = useReducer(geolocationFetchReducer, defaultState);
 
-  useEffect(() => {
-    let didCancel = false;
+  const success = position => {
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
 
-    const fetchData = () => {
-      dispatch({ type: ActionTypes.FETCH_INIT });
+    dispatch({
+      type: ActionTypes.FETCH_SUCCESS,
+      payload: { lat, long },
+    });
+  };
 
-      function success(position) {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-
-        if (!didCancel) {
-          dispatch({
-            type: ActionTypes.FETCH_SUCCESS,
-            payload: { lat, long },
-          });
-        }
-      }
-
-      function error() {
-        if (!didCancel) {
-          dispatch({
-            type: ActionTypes.FETCH_ERROR,
-            payload:
-              'Unable to retrieve your location. Please, enter your city..',
-          });
-        }
-      }
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else if (!didCancel) {
-        dispatch({
-          type: ActionTypes.FETCH_ERROR,
-          payload: 'Please, enter your city..',
-        });
-      }
-    };
-
-    if (fetching) {
-      fetchData();
-    }
-
-    return () => {
-      didCancel = true;
-    };
-  }, [fetching]);
+  const error = () =>
+    dispatch({
+      type: ActionTypes.FETCH_ERROR,
+      payload: 'Unable to retrieve your location. Please, enter your city..',
+    });
 
   const doGeolocationFetch = () => {
-    setFetching(true);
+    dispatch({ type: ActionTypes.FETCH_INIT });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      dispatch({
+        type: ActionTypes.FETCH_ERROR,
+        payload: 'Please, enter your city..',
+      });
+    }
   };
 
   return (

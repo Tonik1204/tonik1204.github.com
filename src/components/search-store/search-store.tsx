@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 
 enum ActionTypes {
@@ -9,11 +9,6 @@ enum ActionTypes {
   FETCH_BY_QUERY_SUCCESS = 'search-city/fetch-by-query-success',
   SET_CITY_DATA = 'search-city/set-city-data',
   CLEAN_DATA = 'search-city/clean-data',
-}
-
-enum FetchingTypes {
-  FETCH_CITIY_BY_COORDS = 'CITY_BY_COORDS',
-  FETCH_CITIES_BY_QUERY = 'CITIES_BY_QUERY',
 }
 
 interface CityItem {
@@ -115,84 +110,52 @@ const getTransformSearchData = (data: any[]): CityItem[] =>
   }));
 
 const SearchStore = (props: any): JSX.Element => {
-  const [fetchingType, setFetchingType] = useState<FetchingTypes | null>(null);
-  const [url, setUrl] = useState<string>('');
   const [state, dispatch] = useReducer(searchFetchReducer, defaultState);
 
-  useEffect(() => {
-    let didCancel = false;
+  const fetchData = async (url, onSuccess) => {
+    dispatch({ type: ActionTypes.FETCH_INIT });
 
-    const fetchData = async onSuccess => {
-      dispatch({ type: ActionTypes.FETCH_INIT });
+    try {
+      const result = await axios(url);
 
-      try {
-        const result = await axios(url);
-
-        if (!didCancel && typeof result.data === 'object') {
-          onSuccess(result.data);
-        }
-      } catch (error) {
-        if (!didCancel) {
-          dispatch({ type: ActionTypes.FETCH_ERROR });
-        }
+      if (typeof result.data === 'object') {
+        dispatch({ type: ActionTypes.FETCH_SUCCESS });
+        onSuccess(result.data);
       }
-    };
-
-    switch (fetchingType) {
-      case FetchingTypes.FETCH_CITIY_BY_COORDS:
-        fetchData(data => {
-          dispatch({ type: ActionTypes.FETCH_SUCCESS });
-          dispatch({
-            type: ActionTypes.FETCH_BY_COORDS_SUCCESS,
-            payload: {
-              id: 0,
-              name: getNearestCityName(
-                data._embedded['location:nearest-cities'],
-              ),
-            },
-          });
-        });
-        break;
-      case FetchingTypes.FETCH_CITIES_BY_QUERY:
-        fetchData(data => {
-          dispatch({ type: ActionTypes.FETCH_SUCCESS });
-          dispatch({
-            type: ActionTypes.FETCH_BY_QUERY_SUCCESS,
-            payload: getTransformSearchData(
-              data._embedded['city:search-results'],
-            ),
-          });
-        });
-        break;
+    } catch (error) {
+      dispatch({ type: ActionTypes.FETCH_ERROR });
     }
+  };
 
-    return () => {
-      didCancel = true;
-    };
-  }, [url, fetchingType]);
-
-  const setCityData = (data: CityData) => {
+  const setCityData = (data: CityData) =>
     dispatch({
       type: ActionTypes.SET_CITY_DATA,
       payload: data,
     });
-  };
 
-  const cleanSearchData = () => {
+  const cleanSearchData = () =>
     dispatch({
       type: ActionTypes.CLEAN_DATA,
     });
-  };
 
-  const doCityFetchByCoords = (urlPath: string) => {
-    setUrl(urlPath);
-    setFetchingType(FetchingTypes.FETCH_CITIY_BY_COORDS);
-  };
+  const doCityFetchByCoords = (url: string) =>
+    fetchData(url, data =>
+      dispatch({
+        type: ActionTypes.FETCH_BY_COORDS_SUCCESS,
+        payload: {
+          id: 0,
+          name: getNearestCityName(data._embedded['location:nearest-cities']),
+        },
+      }),
+    );
 
-  const doCitiesFetchByQuery = (urlPath: string) => {
-    setUrl(urlPath);
-    setFetchingType(FetchingTypes.FETCH_CITIES_BY_QUERY);
-  };
+  const doCitiesFetchByQuery = (url: string) =>
+    fetchData(url, data =>
+      dispatch({
+        type: ActionTypes.FETCH_BY_QUERY_SUCCESS,
+        payload: getTransformSearchData(data._embedded['city:search-results']),
+      }),
+    );
 
   return (
     <SearchContext.Provider
