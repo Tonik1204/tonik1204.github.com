@@ -10,8 +10,3 @@ export const convertKelvinToCelsius = (value: number): number =>
 
 export const getSunData = (text: string, time: number): string =>
   `${text} - ${moment(time * 1000).format('HH:mm')}`;
-
-export const isDayTime = (sunrise: number, sunset: number): boolean => {
-  const hours = new Date().getHours();
-  return hours > sunrise && hours < sunset;
-};
